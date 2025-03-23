@@ -1,0 +1,258 @@
+{
+	"info": {
+		"_postman_id": "9766132c-706b-4a6f-aded-f7261cc2eb9b",
+		"name": "Popcorn Palace Movie Ticket Booking System",
+		"description": "A collection of API endpoints for the Popcorn Palace Movie Ticket Booking System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43237783"
+	},
+	"item": [
+		{
+			"name": "Movie APIs",
+			"item": [
+				{
+					"name": "Get all movies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/movies/all",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"movies",
+								"all"
+							]
+						},
+						"description": "Fetches all movies available in the system"
+					},
+					"response": []
+				},
+				{
+					"name": "Add a movie",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Sample Movie Title\",\n    \"genre\": \"Action\",\n    \"duration\": 120,\n    \"rating\": 8.7,\n    \"releaseYear\": 2025\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/movies",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"movies"
+							]
+						},
+						"description": "Adds a new movie to the system"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a movie",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Updated Movie Title\",\n    \"genre\": \"Comedy\",\n    \"duration\": 95,\n    \"rating\": 7.9,\n    \"releaseYear\": 2024\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/movies/update/{{movieTitle}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"movies",
+								"update",
+								"{{movieTitle}}"
+							]
+						},
+						"description": "Updates an existing movie by title"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a movie",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/movies/{{movieTitle}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"movies",
+								"{{movieTitle}}"
+							]
+						},
+						"description": "Deletes a movie by title"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Showtimes APIs",
+			"item": [
+				{
+					"name": "Get showtime by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/showtimes/{{showtimeId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"showtimes",
+								"{{showtimeId}}"
+							]
+						},
+						"description": "Fetches a showtime by its ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Add a showtime",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"movieId\": 1,\n    \"price\": 20.2,\n    \"theater\": \"Sample Theater\",\n    \"startTime\": \"2025-02-14T11:47:46.125405Z\",\n    \"endTime\": \"2025-02-14T14:47:46.125405Z\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/showtimes",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"showtimes"
+							]
+						},
+						"description": "Adds a new showtime"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a showtime",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"movieId\": 1,\n    \"price\": 50.2,\n    \"theater\": \"Sample Theater\",\n    \"startTime\": \"2025-02-14T11:47:46.125405Z\",\n    \"endTime\": \"2025-02-14T14:47:46.125405Z\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/showtimes/update/{{showtimeId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"showtimes",
+								"update",
+								"{{showtimeId}}"
+							]
+						},
+						"description": "Updates an existing showtime"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a showtime",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/showtimes/{{showtimeId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"showtimes",
+								"{{showtimeId}}"
+							]
+						},
+						"description": "Deletes a showtime by ID"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Booking APIs",
+			"item": [
+				{
+					"name": "Book a ticket",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"showtimeId\": 1,\n    \"seatNumber\": 15,\n    \"userId\": \"84438967-f68f-4fa0-b620-0f08217e76af\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/bookings",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"bookings"
+							]
+						},
+						"description": "Books a ticket for a specific showtime and seat"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "movieTitle",
+			"value": "Sample Movie Title",
+			"type": "string"
+		},
+		{
+			"key": "showtimeId",
+			"value": "1",
+			"type": "string"
+		}
+	]
+}

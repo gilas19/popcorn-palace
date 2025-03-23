@@ -1,0 +1,230 @@
+# Popcorn Palace - Movie Ticket Booking System
+
+This document provides instructions on how to build, run, and test the Popcorn Palace Movie Ticket Booking System.
+
+## Table of Contents
+
+1. [Prerequisites](#prerequisites)
+2. [Setting Up the Database](#setting-up-the-database)
+3. [Building the Application](#building-the-application)
+4. [Running the Application](#running-the-application)
+5. [Testing the Application](#testing-the-application)
+6. [API Documentation](#api-documentation)
+7. [Troubleshooting](#troubleshooting)
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed on your system:
+
+- Java Development Kit (JDK) 17 or later
+- Maven 3.6.0 or later
+- Docker and Docker Compose (for running PostgreSQL)
+- Git (for version control)
+- An IDE of your choice (IntelliJ IDEA, Eclipse, VS Code, etc.)
+
+You can verify your installations with the following commands:
+
+```bash
+java -version
+mvn -version
+docker --version
+docker-compose --version
+git --version
+```
+
+* Navigate to the project root directory:
+
+```bash
+cd /path/to/popcorn-palace
+```
+
+## Start the PostgreSQL Database
+
+The application uses PostgreSQL as its database. You can run it using Docker:
+
+1. Start the PostgreSQL container using Docker Compose:
+
+```bash
+docker-compose -f compose.yml up -d
+```
+
+This will start a PostgreSQL instance with the configuration specified in the `compose.yml` file.
+
+2. Verify that the container is running:
+
+```bash
+docker ps
+```
+
+You should see a running container for PostgreSQL.
+
+## Run the Spring Boot Application
+
+1. make the Maven wrapper executable:
+
+```bash
+chmod +x mvnw
+```
+
+2. Build the application using Maven:
+
+```bash
+./mvnw clean install
+```
+
+This command will:
+- Clean the project
+- Compile the source code
+- Run the tests
+- Package the application into a JAR file
+
+If you want to skip the tests during the build process, you can use:
+
+```bash
+mvn clean install -DskipTests
+```
+
+## Running the Application
+
+After building the application, you can run it using the following methods:
+
+### Method 1: Using Maven
+
+```bash
+mvn spring-boot:run
+```
+
+### Method 2: Using Java
+
+```bash
+java -jar target/popcorn_palace-0.0.1-SNAPSHOT.jar
+```
+
+The application will start and be accessible at `http://localhost:8080`.
+
+## Testing the Application
+
+### Running Unit and Integration Tests
+
+To run all tests:
+
+```bash
+mvn test
+```
+
+To run a specific test class:
+
+```bash
+mvn test -Dtest=MovieControllerTest
+```
+
+### Manual Testing with API Clients
+
+You can test the API endpoints using tools like Postman, cURL, or any HTTP client.
+
+Here are some example API requests:
+
+#### Get All Movies
+
+```bash
+curl -X GET http://localhost:8080/movies
+```
+
+#### Add a New Movie
+
+```bash
+curl -X POST http://localhost:8080/movies \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "The Matrix",
+    "genre": "Sci-Fi",
+    "duration": 136,
+    "rating": "PG-13",
+    "releaseYear": 1999
+  }'
+```
+
+#### Add a New Showtime
+
+```bash
+curl -X POST http://localhost:8080/showtimes \
+  -H "Content-Type: application/json" \
+  -d '{
+    "movieId": 1,
+    "theater": "Theater 1",
+    "startTime": "2025-04-01T18:00:00Z",
+    "endTime": "2025-04-01T20:30:00Z",
+    "price": 12.99
+  }'
+```
+
+#### Book a Ticket
+
+```bash
+curl -X POST http://localhost:8080/bookings \
+  -H "Content-Type: application/json" \
+  -d '{
+    "showtimeId": 1,
+    "customerName": "John Doe",
+    "customerEmail": "john.doe@example.com",
+    "seatNumber": "A1"
+  }'
+```
+
+## API Documentation
+
+The API documentation is available via Swagger UI when the application is running. You can access it at:
+
+```
+http://localhost:8080/swagger-ui.html
+```
+
+This provides a comprehensive view of all available endpoints, request/response models, and allows you to test the API directly from the browser.
+
+## Troubleshooting
+
+### Database Connection Issues
+
+If you encounter database connection issues:
+
+1. Ensure the PostgreSQL container is running:
+
+```bash
+docker ps
+```
+
+2. Check the application logs for specific error messages:
+
+```bash
+mvn spring-boot:run
+```
+
+3. Verify the database connection properties in `application.properties` or `application.yml`.
+
+### Build Failures
+
+If the build fails:
+
+1. Ensure you have the correct JDK version installed and configured.
+
+2. Check for compilation errors in your code.
+
+3. Run Maven with the verbose flag for more detailed output:
+
+```bash
+mvn clean install -X
+```
+
+### Runtime Errors
+
+If the application fails to start or encounters runtime errors:
+
+1. Check the application logs for error messages.
+
+2. Verify that all required dependencies are available.
+
+3. Ensure that the database is properly set up and accessible.
+
+---
+
+For additional help or to report issues, please contact the development team or create an issue in the project repository.
