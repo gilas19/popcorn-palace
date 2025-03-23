@@ -22,9 +22,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+/**
+ * Unit tests for the ShowtimeService class.
+ * Tests the business logic for showtime operations.
+ */
 @ExtendWith(MockitoExtension.class)
 public class ShowtimeServiceTest {
 
+    // Constants used across multiple test cases.
     private static final Long MOVIE_ID = 1L;
     private static final Long EXISTING_SHOWTIME_ID = 2L;
     private static final Long UPDATE_SHOWTIME_ID = 3L;
@@ -47,10 +52,15 @@ public class ShowtimeServiceTest {
     private Showtime existingShowtime;
     private ZonedDateTime baseTime;
 
+    /**
+     * Set up the test environment before each test.
+     * Creates sample entities and DTOs for testing.
+     */
     @BeforeEach
     void setUp() {
         baseTime = ZonedDateTime.now().plusDays(1);
 
+        // Create a sample movie
         movie = new Movie();
         movie.setId(MOVIE_ID);
         movie.setTitle("Test Movie");
@@ -59,6 +69,7 @@ public class ShowtimeServiceTest {
         movie.setRating(8.5);
         movie.setReleaseYear(2023);
 
+        // Create a sample showtime DTO
         validShowtimeDTO = new ShowtimeDTO();
         validShowtimeDTO.setMovieId(MOVIE_ID);
         validShowtimeDTO.setTheater(THEATER_NAME);
@@ -66,6 +77,7 @@ public class ShowtimeServiceTest {
         validShowtimeDTO.setEndTime(baseTime.plusHours(2));
         validShowtimeDTO.setPrice(TICKET_PRICE);
 
+        // Create a sample existing showtime
         existingShowtime = new Showtime();
         existingShowtime.setId(EXISTING_SHOWTIME_ID);
         existingShowtime.setMovie(movie);
@@ -75,6 +87,10 @@ public class ShowtimeServiceTest {
         existingShowtime.setPrice(TICKET_PRICE);
     }
 
+    /**
+     * Tests that addShowtime throws InvalidRequestException when there's a time overlap with existing showtimes.
+     * Verifies that the repository interactions occur as expected and no showtime is saved.
+     */
     @Test
     void addShowtime_WhenOverlap_ShouldThrowInvalidRequestException() {
         // When
@@ -98,6 +114,10 @@ public class ShowtimeServiceTest {
         verify(showtimeRepository, never()).save(any(Showtime.class));
     }
 
+    /**
+     * Tests that updateShowtime throws InvalidRequestException when the update would create a time overlap.
+     * Verifies that the appropriate repositories are called and no showtime is saved.
+     */
     @Test
     void updateShowtime_WhenOverlap_ShouldThrowInvalidRequestException() {
         // Given
@@ -141,6 +161,10 @@ public class ShowtimeServiceTest {
         verify(showtimeRepository, never()).save(any(Showtime.class));
     }
 
+    /**
+     * Tests that updateShowtime throws ResourceNotFoundException when the showtime ID doesn't exist.
+     * Verifies that the showtime repository is checked but no other repository interactions occur.
+     */
     @Test
     void updateShowtime_WhenShowtimeNotFound_ShouldThrowResourceNotFoundException() {
         // When

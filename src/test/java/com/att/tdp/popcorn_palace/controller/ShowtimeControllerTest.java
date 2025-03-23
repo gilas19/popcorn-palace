@@ -20,6 +20,10 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+/**
+ * Integration tests for the ShowtimeController class.
+ * Tests the REST endpoints for showtime management functionality using Spring's WebMvcTest.
+ */
 @WebMvcTest(ShowtimeController.class)
 public class ShowtimeControllerTest {
 
@@ -34,6 +38,10 @@ public class ShowtimeControllerTest {
 
     private ShowtimeDTO showtimeDTO;
 
+    /**
+     * Set up the test environment before each test.
+     * Creates a sample showtime DTO with future dates.
+     */
     @BeforeEach
     void setUp() {
         ZonedDateTime startTime = ZonedDateTime.now().plusDays(1);
@@ -42,6 +50,12 @@ public class ShowtimeControllerTest {
         showtimeDTO = new ShowtimeDTO(1L, 1L, "Theater 1", startTime, endTime, 10.50);
     }
 
+    /**
+     * Tests the getShowtimeById endpoint with a valid ID.
+     * Verifies that the endpoint returns the showtime with correct data.
+     * 
+     * @throws Exception if an error occurs during the test
+     */
     @Test
     void getShowtimeById_ShouldReturnShowtime() throws Exception {
         // When
@@ -56,6 +70,12 @@ public class ShowtimeControllerTest {
                 .andExpect(jsonPath("$.price").value(10.50));
     }
 
+    /**
+     * Tests the getShowtimeById endpoint with a non-existent ID.
+     * Verifies that the endpoint returns a 404 Not Found status.
+     * 
+     * @throws Exception if an error occurs during the test
+     */
     @Test
     void getShowtimeById_ShouldReturnNotFound() throws Exception {
         // When
@@ -67,6 +87,12 @@ public class ShowtimeControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    /**
+     * Tests the addShowtime endpoint with valid input.
+     * Verifies that the endpoint successfully creates a new showtime and returns it with an ID.
+     * 
+     * @throws Exception if an error occurs during the test
+     */
     @Test
     void addShowtime_ShouldCreateAndReturnShowtime() throws Exception {
         // When
@@ -83,6 +109,12 @@ public class ShowtimeControllerTest {
                 .andExpect(jsonPath("$.price").value(10.50));
     }
 
+    /**
+     * Tests the updateShowtime endpoint with valid input.
+     * Verifies that the endpoint successfully updates an existing showtime and returns the updated version.
+     * 
+     * @throws Exception if an error occurs during the test
+     */
     @Test
     void updateShowtime_ShouldUpdateAndReturnShowtime() throws Exception {
         // When
@@ -99,6 +131,12 @@ public class ShowtimeControllerTest {
                 .andExpect(jsonPath("$.price").value(10.50));
     }
 
+    /**
+     * Tests the updateShowtime endpoint with a non-existent ID.
+     * Verifies that the endpoint returns a 404 Not Found status.
+     * 
+     * @throws Exception if an error occurs during the test
+     */
     @Test
     void updateShowtime_ShouldReturnNotFound() throws Exception {
         // When
@@ -112,6 +150,12 @@ public class ShowtimeControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    /**
+     * Tests the deleteShowtime endpoint with a valid ID.
+     * Verifies that the endpoint successfully processes a delete request and returns 204 No Content.
+     * 
+     * @throws Exception if an error occurs during the test
+     */
     @Test
     void deleteShowtime_ShouldReturnNoContent() throws Exception {
         // When
@@ -122,6 +166,12 @@ public class ShowtimeControllerTest {
                 .andExpect(status().isNoContent());
     }
 
+    /**
+     * Tests the deleteShowtime endpoint with a non-existent ID.
+     * Verifies that the endpoint returns a 404 Not Found status.
+     * 
+     * @throws Exception if an error occurs during the test
+     */
     @Test
     void deleteShowtime_ShouldReturnNotFound() throws Exception {
         // When
@@ -133,6 +183,12 @@ public class ShowtimeControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    /**
+     * Tests the addShowtime endpoint with invalid input.
+     * Verifies that the endpoint returns a 400 Bad Request status when validation fails.
+     * 
+     * @throws Exception if an error occurs during the test
+     */
     @Test
     void addShowtime_ShouldReturnBadRequest_WhenInvalidInput() throws Exception {
         // Create an invalid ShowtimeDTO (missing required fields)

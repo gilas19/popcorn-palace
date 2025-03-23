@@ -25,6 +25,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * Integration tests for the MovieController class.
+ * Tests the REST endpoints for movie management functionality using Spring's WebMvcTest.
+ */
 @WebMvcTest(MovieController.class)
 public class MovieControllerTest {
 
@@ -36,11 +40,21 @@ public class MovieControllerTest {
 
     private ObjectMapper objectMapper;
 
+    /**
+     * Set up the test environment before each test.
+     * Initializes the ObjectMapper.
+     */
     @BeforeEach
     public void setUp() {
         objectMapper = new ObjectMapper();
     }
 
+    /**
+     * Tests the getAllMovies endpoint.
+     * Verifies that the endpoint returns all movies with correct data.
+     * 
+     * @throws Exception if an error occurs during the test
+     */
     @Test
     public void testGetAllMovies() throws Exception {
         // Given
@@ -60,6 +74,12 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$[1].title").value("Test Movie 2"));
     }
 
+    /**
+     * Tests the addMovie endpoint.
+     * Verifies that the endpoint successfully creates a new movie and returns it with an ID.
+     * 
+     * @throws Exception if an error occurs during the test
+     */
     @Test
     public void testAddMovie() throws Exception {
         // Given
@@ -79,6 +99,12 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$.title").value("New Movie"));
     }
 
+    /**
+     * Tests the updateMovie endpoint.
+     * Verifies that the endpoint successfully updates an existing movie and returns the updated version.
+     * 
+     * @throws Exception if an error occurs during the test
+     */
     @Test
     public void testUpdateMovie() throws Exception {
         // Given
@@ -98,6 +124,12 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$.title").value("Updated Movie"));
     }
 
+    /**
+     * Tests the deleteMovie endpoint.
+     * Verifies that the endpoint successfully processes a delete request and returns 204 No Content.
+     * 
+     * @throws Exception if an error occurs during the test
+     */
     @Test
     public void testDeleteMovie() throws Exception {
         // When
